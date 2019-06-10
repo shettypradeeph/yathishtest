@@ -10,7 +10,7 @@ import java.io.FileReader;
 import java.io.IOException;
 
 
-public final class JSONUtils {
+public class JSONUtils {
     private final Logger log = LogManager.getLogger(JSONUtils.class);
 
     public JSONUtils() {

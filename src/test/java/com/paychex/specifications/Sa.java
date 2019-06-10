@@ -1,13 +1,25 @@
 package com.paychex.specifications;
 
+import com.aventstack.extentreports.MediaEntityBuilder;
+import com.aventstack.extentreports.MediaEntityModelProvider;
 import com.jayway.restassured.http.ContentType;
 import com.jayway.restassured.response.Response;
+import com.paychex.reporting.ReportingManager;
+import io.github.bonigarcia.wdm.ChromeDriverManager;
+import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.By;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.annotations.*;
 import com.paychex.util.*;
+
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
-public class SampleScript extends BaseTest {
+public class Sa extends BaseTest {
     RestUtil restUtil;
 
     @BeforeClass
@@ -15,32 +27,40 @@ public class SampleScript extends BaseTest {
         restUtil = new RestUtil();
     }
 
-    @DataProvider(name = "dataxyz")
+    @DataProvider(name = "lmno")
     public Object[][] sendData(){
         return new Object[][]{{"name","pradeep"},{"job","qa"}};
     }
 
 
+
     @Test
-    public void getTest() {
-        Map<String, Object> headers = new HashMap<String, Object>();
-        Map<String, Object> parameters = new HashMap<String, Object>();
-        headers.put("accept-encoding", "gzip, deflate, br");
-        headers.put("accept-encoding1", "gzip, deflate, br");
-        headers.put("accept-encoding2", "gzip, deflate, br");
-        parameters.put("postId1", "1");
-        parameters.put("postId2", "1");
-        parameters.put("postId3", "1");
-        restUtil.setBaseURI("https://jsonplaceholder.typicode.com");
-        restUtil.setHeaders(headers);
-        restUtil.setParameters(parameters);
-        Response response = restUtil.getRequest("posts");
-        System.out.println(response.statusCode());
-        System.out.println(response.then().contentType(ContentType.JSON).extract().response().asString());
+    public void getTest1() {
+        ChromeDriverManager.getInstance().setup();
+        ChromeDriver driver = new ChromeDriver();
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        driver.get("http://www.google.com");
+        driver.findElement(By.name("q")).sendKeys("Selenium Testing");
+        byte[] src= ((TakesScreenshot)driver).getScreenshotAs(OutputType.BYTES);
+        try {
+            // now copy the  screenshot to desired location using copyFile //method
+            FileUtils.writeByteArrayToFile(new File("C:\\Users\\pradeeps\\eclipse-workspace\\apitests\\reporting\\error.png"),src);
+
+                    //copyFile(src, new File("C:\\Users\\pradeeps\\eclipse-workspace\\apitests\\reporting\\error.png"));
+           /* MediaEntityModelProvider mediaModel =
+                    MediaEntityBuilder.createScreenCaptureFromPath("error.png").build();
+            ReportingManager.getNode().fail("helloahell heo w adad asdasda asdasd sas",mediaModel);*/
+            //ReportingManager.getNode().addScreenCaptureFromPath("error.png");
+            ReportingManager.getNode().fail("helllllll").addScreenCaptureFromPath("error.png");
+        }
+        catch (Exception e){
+
+        }
+
     }
 
-    @Test(dataProvider = "dataxyz")
-    public void postTest(String user, String pass) {
+    @Test(dataProvider = "lmno")
+    public void getTest2(String user, String pass) {
         Map<String, Object> headers = new HashMap<String, Object>();
         //headers.put("xyz", "lmno");
 
@@ -77,7 +97,7 @@ public class SampleScript extends BaseTest {
     }
 
     @Test
-    public void putTest() {
+    public void getTest3() {
         Map<String, Object> headers = new HashMap<String, Object>();
         headers.put("content-type", "application/json");
         restUtil.setBaseURI("https://reqres.in");
@@ -93,7 +113,7 @@ public class SampleScript extends BaseTest {
     }
 
     @Test
-    public void deleteTest() {
+    public void getTest4() {
         restUtil.setBaseURI("https://reqres.in");
         Response response = restUtil.deleteRequest("api/users/1");
         System.out.println(response.statusCode());
