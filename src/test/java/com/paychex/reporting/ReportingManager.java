@@ -18,7 +18,7 @@ public class ReportingManager {
     public synchronized static ExtentReports getReporter() {
         if (extentReports == null) {
             String workingDir = System.getProperty("user.dir");
-            ExtentHtmlReporter htmlReporter = new ExtentHtmlReporter(workingDir + File.separator + "reporting/ExtentReportsTestNG.html");
+            ExtentHtmlReporter htmlReporter = new ExtentHtmlReporter(workingDir + File.separator + "ExtentReportsTestNG.html");
             extentReports = new ExtentReports();
             htmlReporter.loadXMLConfig(Utils.getFilePath("src\\test\\resources\\reportconfig.xml"));
             extentReports.attachReporter(htmlReporter);
