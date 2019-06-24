@@ -23,6 +23,7 @@ public class BaseTest {
 
     @AfterSuite
     public void finalise(){
+        //nononono
         ReportingManager.extent.flush();
     }
 }
